@@ -5,5 +5,4 @@ PORT = "5000"
 
 # Application Settings
 SECRET_KEY = "changeme"
-SESSION_TYPE = "redis"
 SQLALCHEMY_DATABASE_URI = "mysql://vive:vive@localhost/vive"
