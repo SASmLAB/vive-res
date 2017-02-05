@@ -15,14 +15,16 @@ class SearchForm(FlaskForm):
                              ('', 'All periods'), ('A', 'A Period'), ('B', 'B Period'), ('C', 'C Period'),
                              ('D', 'D Period'), ('E', 'E Period'), ('F', 'F Period'), ('G', 'G Period'),
                              ('X', 'After School')
-                         ]
+                         ],
+                         default=''
                          )
     people = SelectField('People', choices=[(0, 'All people'), (1, 'Solo'), (2, 'Duo'), (-1, 'Class')], coerce=int)
     status = SelectField('Status',
                          choices=[
                              ('', 'All statuses'), ('pending', 'Pending'), ('accepted', 'Accepted'),
                              ('denied', 'Denied')
-                         ]
+                         ],
+                         default=''
                          )
     submit = SubmitField('Search')
 
@@ -36,15 +38,12 @@ def admin():
     search_form = SearchForm(formdata=request.args, meta={'csrf_enabled': False})
     reservations = Reservation.query
 
-    print search_form.period.data
     if search_form.period.data and search_form.period.data != '':
         reservations = reservations.filter_by(period=search_form.period.data)
 
-    print search_form.people.data
     if search_form.people.data and search_form.people.data != 0:
         reservations = reservations.filter_by(people=search_form.people.data)
 
-    print search_form.status.data
     if search_form.status.data and search_form.status.data != '':
         status = {'pending': None, 'accepted': True, 'denied': False}.get(search_form.status.data)
         reservations = reservations.filter_by(accepted=status)
