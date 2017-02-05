@@ -18,6 +18,9 @@ def create_app(config_override=None):
     from blueprints.auth import login_manager
     login_manager.init_app(application)
 
+    from blueprints.reservation import cache
+    cache.init_app(application)
+
     import blueprints
     for blueprint in blueprints.blueprints:
         application.register_blueprint(blueprint)

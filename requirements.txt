@@ -1,8 +1,11 @@
 Flask==0.11.1
+Flask-Cache==0.13.1
 Flask-Login==0.4.0
 Flask-OAuth==0.12
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.13.1
+icalendar==3.11.2
 MySQL-python==1.2.5
 python-dateutil==2.6.0
+redis==2.10.5
 requests==2.13.0
