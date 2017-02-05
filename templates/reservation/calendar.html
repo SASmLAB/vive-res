@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Reserve VR Time!</h1>
+  <a href="{{ url_for('.create') }}" class="btn btn-default btn-sm">Use the form</a>
+  <br><br>
+  <div id="calendar"></div>
+{% endblock %}
+{% block javascript %}
+  <script>
+      $('#calendar').fullCalendar({
+          events: '{{ url_for('.calendar_events') }}',
+          eventClick: function (calEvent, jsEvent, view) {
+              if (!calEvent.available) {
+                  jsEvent.preventDefault();
+              }
+          }
+      });
+  </script>
+{% endblock %}

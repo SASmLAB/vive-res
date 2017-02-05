@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet">
     <style>
       html {
         height: 100%;
@@ -26,6 +27,25 @@
       .site-footer {
         font-size: smaller;
         color: #5e5e5e;
+      }
+
+      .fc-event {
+        text-decoration: none !important;
+      }
+
+      .fc-event:focus {
+        color: #fff;
+      }
+
+      .fc-event.available {
+        background-color: limegreen;
+        border-color: transparent;
+      }
+
+      .fc-event.unavailable {
+        background-color: red;
+        border-color: transparent;
+        cursor: default;
       }
     </style>
   </head>
@@ -100,6 +120,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
     {%- block javascript %}
     {%- endblock %}
   </body>
