@@ -1,6 +1,5 @@
 import click
 from flask import Flask
-from flask_session import Session
 from flask_wtf import CsrfProtect
 
 
@@ -11,7 +10,6 @@ def create_app(config_override=None):
     application.config.from_object(config)
     application.config.from_object(config_override)
 
-    Session(application)
     CsrfProtect(application)
 
     from models import db
