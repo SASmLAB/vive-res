@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Reservations Admin</h1>
+  <br>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#advancedSearch" aria-expanded="false" aria-controls="advancedSearch">
+      Search Options
+  </button>
+  <br>
+  <div class="row">
+    <div class="col-sm-7 col-md-6 col-lg-5">
+      <div class="collapse" id="advancedSearch">
+        <br>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Search Options</h3>
+          </div>
+          <div class="panel-body">
+            <form action="{{ url_for('.admin') }}" method="get">
+              <div class="form-group">
+                {{ search_form.period.label }}
+                {{ search_form.period(class='form-control') }}
+              </div>
+              <div class="form-group">
+                {{ search_form.people.label }}
+                {{ search_form.people(class='form-control') }}
+              </div>
+              <div class="form-group">
+                {{ search_form.status.label }}
+                {{ search_form.status(class='form-control') }}
+              </div>
+              {{ search_form.submit(class='btn btn-primary') }}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  {%- if reservations %}
+  <table class="table table-bordered" data-toggle="table" data-pagination="true">
+    <thead>
+      <tr>
+        <th data-sortable="true">ID</th>
+        <th data-sortable="true">User</th>
+        <th data-sortable="true">Date</th>
+        <th data-sortable="true">Period</th>
+        <th data-sortable="true">People</th>
+        <th data-sortable="true">Submitted</th>
+        <th data-sortable="true">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.id }}</td>
+        <td>
+          <a href="mailto:{{ reservation.user.email }}">
+            {{ reservation.user.first_name }}
+            {{ reservation.user.last_name }}
+          </a>
+        </td>
+        <td>{{ reservation.date.strftime('%B %d, %Y') }}</td>
+        <td>{{ periods[reservation.period] }}</td>
+        <td>{{ people[reservation.people] }}</td>
+        <td>{{ reservation.created_at.strftime('%Y-%m-%d %I:%M:%S %p') }}</td>
+        <td>
+          {%- if reservation.accepted == None %}
+          Pending
+          {%- elif reservation.accepted == True %}
+          Accepted
+          {%- elif reservation.accepted == False %}
+          Denied: {{ reservation.denial_reason }}
+          {%- endif %}
+        </td>
+        <td>
+          {%- if reservation.accepted == None %}
+          <button type="button" class="btn btn-success btn-xs btn-accept" data-id="{{ reservation.id }}">
+              Accept
+          </button>
+          <button type="button" class="btn btn-danger btn-xs btn-deny" data-id="{{ reservation.id }}">
+              Deny
+          </button>
+          {%- endif %}
+        </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+  {%- else %}
+  <p class="lead">
+    I could not find any reservations that match your search.
+    Please try again!
+  </p>
+  {%- endif %}
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).on('click', '.btn-accept', function (event) {
+        event.preventDefault();
+
+        if (confirm('Are you sure you want to accept this reservation?')) {
+            var id = $(this).data('id');
+            $.post('{{ url_for('reservation.admin_accept') }}', {
+                csrf_token: '{{ csrf_token() }}',
+                id: id
+            }, function (success) {
+                if (success) {
+                    location.reload();
+                }
+            });
+        }
+    });
+    $(document).on('click', '.btn-deny', function (event) {
+        event.preventDefault();
+
+        var reason = prompt("What's the denial reason?");
+        if (reason) {
+            var id = $(this).data('id');
+            $.post('{{ url_for('reservation.admin_deny') }}', {
+                csrf_token: '{{ csrf_token() }}',
+                id: id,
+                reason: reason
+            });
+            location.reload();
+        }
+    });
+</script>
+{% endblock %}

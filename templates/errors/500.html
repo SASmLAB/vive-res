@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <br>
+  <div class="text-center">
+    <h1>Oops!</h1>
+    <p class="lead">
+      Something went really wrong.
+      <br>
+      Maybe try heading back <a href="{{ url_for('standalone.index') }}">home</a>?
+    </p>
+  </div>
+{% endblock %}

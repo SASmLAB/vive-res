@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="jumbotron">
+    <h1>Jump into virtual reality.</h1>
+    <p>The <a href="http://sasmlab.org/">SAS mLAB</a> now has a <a href="https://vive.com/">Vive</a>.</p>
+    <p>Enjoy a full 225 ft<sup>2</sup> of space in which you can explore the virtual world.</p>
+    <p><a href="{{ url_for('reservation.index') }}" class="btn btn-primary btn-lg">Reserve a spot!</a></p>
+  </div>
+{% endblock %}

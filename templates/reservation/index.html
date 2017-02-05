@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Your Reservations</h1>
+  {%- if reservations %}
+  <table class="table table-bordered" data-toggle="table" data-pagination="true">
+    <thead>
+      <tr>
+        <th data-sortable="true">ID</th>
+        <th data-sortable="true">Date</th>
+        <th data-sortable="true">Period</th>
+        <th data-sortable="true">People</th>
+        <th data-sortable="true">Submitted</th>
+        <th data-sortable="true">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.date.strftime('%B %d, %Y') }}</td>
+        <td>{{ periods[reservation.period] }}</td>
+        <td>{{ people[reservation.people] }}</td>
+        <td>{{ reservation.created_at.strftime('%Y-%m-%d %I:%M:%S %p') }}</td>
+        <td>
+          {%- if reservation.accepted == None %}
+          Pending
+          {%- elif reservation.accepted == True %}
+          Accepted
+          {%- elif reservation.accepted == False %}
+          Denied: {{ reservation.denial_reason }}
+          {%- endif %}
+        </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+  {%- else %}
+  <p class="lead">
+    What?
+    You haven't reserved time to play the Vive yet?
+    What are you waiting for!
+  </p>
+  {%- endif %}
+  <a href="{{ url_for('reservation.create') }}" class="btn btn-primary btn-lg">Reserve VR time!</a>
+{% endblock %}

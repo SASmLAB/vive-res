@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Reserve VR Time!</h1>
+  <br>
+  <div class="row">
+    <div class="col-sm-6 col-md-5 col-lg-4">
+      <form action="{{ url_for('.create') }}" method="post">
+        {{ form.csrf_token }}
+        <div class="form-group form-group-lg{% if form.date.errors %} has-error{% endif %}">
+          {{ form.date.label(class='control-label') }}
+          {{ form.date(class='form-control') }}
+          {%- if form.date.errors %}
+          <span class="help-block">{{ form.date.errors[0] }}</span>
+          {%- endif %}
+        </div>
+        <div class="form-group form-group-lg{% if form.period.errors %} has-error{% endif %}">
+          {{ form.period.label(class='control-label') }}
+          {{ form.period(class='form-control') }}
+          {%- if form.period.errors %}
+          <span class="help-block">{{ form.period.errors[0] }}</span>
+          {%- endif %}
+        </div>
+        <div class="form-group form-group-lg{% if form.people.errors %} has-error{% endif %}">
+          {{ form.people.label(class='control-label') }}
+          {{ form.people(class='form-control') }}
+          {%- if form.people.errors %}
+          <span class="help-block">{{ form.people.errors[0] }}</span>
+          {%- endif %}
+        </div>
+        <div class="form-group{% if form.agreement.errors %} has-error{% endif %}">
+          <div class="checkbox">
+            <label class="control-label">
+              {{ form.agreement }}
+              {{ form.agreement.label.text }}
+            </label>
+          </div>
+          {%- if form.agreement.errors %}
+          <span class="help-block">{{ form.agreement.errors[0] }}</span>
+          {%- endif %}
+        </div>
+        {{ form.submit(class='btn btn-primary btn-lg') }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+  <script>
+      $('#date').datepicker({
+          autoclose: true,
+          format: 'yyyy-mm-dd',
+          daysOfWeekDisabled: '06'
+      });
+  </script>
+{% endblock %}

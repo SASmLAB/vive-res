@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <br>
+  <div class="text-center">
+    <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/5IqCfxgKZd8?showinfo=0&controls=0&modestbranding=0&rel=0&autoplay=1&start=152&end=173"
+        frameborder="0"
+        allowfullscreen
+    ></iframe>
+    <h1>Oops!</h1>
+    <p class="lead">
+      We couldn't find what you were looking for.
+      <br>
+      Maybe try heading back <a href="{{ url_for('standalone.index') }}">home</a>?
+    </p>
+  </div>
+{% endblock %}
