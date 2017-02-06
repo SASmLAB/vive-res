@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block css %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
   <h1>Your Reservations</h1>
   {%- if reservations %}
@@ -42,4 +45,7 @@
   </p>
   {%- endif %}
   <a href="{{ url_for('reservation.calendar') }}" class="btn btn-primary btn-lg">Reserve VR time!</a>
+{% endblock %}
+{% block javascript %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 {% endblock %}

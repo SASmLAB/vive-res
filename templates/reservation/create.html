@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block css %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
   <h1>Reserve VR Time!</h1>
   <br>
@@ -44,6 +47,7 @@
   </div>
 {% endblock %}
 {% block javascript %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
   <script>
       $('#date').datepicker({
           autoclose: true,
