@@ -8,6 +8,7 @@
 {% block javascript %}
   <script>
       $('#calendar').fullCalendar({
+          height: 'auto',
           events: '{{ url_for('.calendar_events') }}',
           eventClick: function (calEvent, jsEvent, view) {
               if (!calEvent.available) {
