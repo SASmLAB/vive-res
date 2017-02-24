@@ -47,9 +47,15 @@ def calendar_events():
         date_string = date.strftime('%Y-%m-%d')
 
         for index, period in enumerate(schedule):
+            if period == 'X':
+                title = 'After School'
+            else:
+                title = '%s Period' % period
+
             available = not bool(Reservation.query.filter_by(date=date_string, period=period, accepted=True).first())
+
             events.append({
-                'title': '%s Period' % period,
+                'title': title,
                 'start': '%sT%sZ' % (date_string, periods[index]['start']),
                 'end': '%sT%sZ' % (date_string, periods[index]['end']),
                 'url': url_for('.create', date=date_string, period=period) if available else '#',
@@ -57,16 +63,5 @@ def calendar_events():
                 'period': period,
                 'available': available
             })
-
-        available = not bool(Reservation.query.filter_by(date=date_string, period='X', accepted=True).first())
-        events.append({
-            'title': 'After School',
-            'start': '%sT%sZ' % (date_string, periods[6]['start']),
-            'end': '%sT%sZ' % (date_string, periods[6]['end']),
-            'url': url_for('.create', date=date_string, period='X') if available else '#',
-            'className': 'available' if available else 'unavailable',
-            'period': 'X',
-            'available': available
-        })
 
     return jsonify(events)
