@@ -38,4 +38,4 @@ def get_schedule():
     return days
 
 
-from views import index, create, calendar, admin
+from .views import index, create, calendar, admin

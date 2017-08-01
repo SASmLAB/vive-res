@@ -29,7 +29,7 @@ def login_callback(resp):
 
     try:
         user = authenticate_user(access_token)
-    except LoginException, e:
+    except LoginException as e:
         flash(e.message, category='danger')
         return redirect(url_for('.login'))
 
