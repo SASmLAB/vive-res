@@ -11,7 +11,7 @@ cache = Cache(config={'CACHE_TYPE': 'redis'})
 
 @cache.cached(timeout=86400, key_prefix='schedule')
 def get_schedule():
-    feed_url = 'https://sasaustin.myschoolapp.com/podium/feed/iCal.aspx?z=v4OeUdzT%2fcMkrETad3Vi2lpUUdle30lreHWHQsyoOQkdAi%2fR2X1YMCfcyU788fU74jp5PcKIxWN11XogDk3x%2fTogLFGJjNJcYJsjgpZJVhZKTbBkahCSrWWPR10qIEGW'
+    feed_url = 'https://sasaustin.myschoolapp.com/podium/feed/iCal.aspx?z=CK4yWdgjtxOilqm%2fCRUWMbVZh3IOV0oduVex%2fk28KE1T1iqjxj%2foZtxpgB8BoGMYl4fNBxr8Rdhq6YAW5qhTyA%3d%3d'
 
     ical_raw = requests.get(feed_url, headers={'User-agent': 'Mozilla/5.0'}).text  # header fakes out their security
     calendar = Calendar.from_ical(ical_raw)
@@ -27,13 +27,12 @@ def get_schedule():
     }
 
     days = {}
-    pattern = re.compile("^([A-Z]) \(US\)$")
+    pattern = re.compile(".\/.\/([A-G])")
     for event in calendar.walk('vevent'):
         match = pattern.search(str(event['summary']))
         if match:
             letter_day = match.group(1)
-            if letter_day in 'ABCDEFG':
-                days[event['dtstart'].dt] = schedule[letter_day]
+            days[event['dtstart'].dt] = schedule[letter_day]
 
     return days
 
