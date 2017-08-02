@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_cache import Cache
+from flask_caching import Cache
 from icalendar import Calendar
 import re
 import requests
