@@ -19,7 +19,7 @@ def google_login():
         return redirect(request.args.get('next', '/'))
 
     callback = url_for('.login_callback', _external=True)
-    return google.authorize(callback)
+    return google.authorize(callback=callback)
 
 
 @blueprint.route('/login/callback')

@@ -1,7 +1,7 @@
 Flask==0.12.2
 Flask-Caching==1.3.2
 Flask-Login==0.4.0
-Flask-OAuth==0.12
+Flask-OAuthlib==0.9.4
 Flask-SQLAlchemy==2.2
 Flask-WTF==0.13.1
 icalendar==3.11.5

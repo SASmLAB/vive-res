@@ -1,5 +1,5 @@
 from flask_login import LoginManager
-from flask_oauth import OAuth
+from flask_oauthlib.client import OAuth
 from flask import Blueprint
 
 from models.user import User
@@ -23,21 +23,18 @@ def user_loader(id):
 oauth = OAuth()
 
 google = oauth.remote_app('google',
-                          base_url=None,
+                          base_url='https://www.googleapis.com/oauth2/v1/',
                           request_token_url=None,
                           access_token_url='https://www.googleapis.com/oauth2/v4/token',
                           authorize_url='https://accounts.google.com/o/oauth2/v2/auth',
-                          consumer_key='510534009886-e6a5hlisveag9nmnnqjr2qgf5pjbrca6.apps.googleusercontent.com',
-                          consumer_secret='r10t777XTWrWWAuyZQyCVexa',
                           request_token_params={
-                              'response_type': 'code',
                               'scope': 'email profile',
                               'access_type': 'online',
                               'prompt': 'select_account',
                               'hd': 'sasaustin.org'
                           },
-                          access_token_params={'grant_type': 'authorization_code'},
-                          access_token_method='POST')
+                          access_token_method='POST',
+                          app_key='GOOGLE')
 
 blueprint = Blueprint('auth', __name__)
 
