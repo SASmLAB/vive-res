@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask_caching import Cache
 from icalendar import Calendar
 import re
@@ -11,7 +11,7 @@ cache = Cache(config={'CACHE_TYPE': 'redis'})
 
 @cache.cached(timeout=86400, key_prefix='schedule')
 def get_schedule():
-    feed_url = 'https://sasaustin.myschoolapp.com/podium/feed/iCal.aspx?z=CK4yWdgjtxOilqm%2fCRUWMbVZh3IOV0oduVex%2fk28KE1T1iqjxj%2foZtxpgB8BoGMYl4fNBxr8Rdhq6YAW5qhTyA%3d%3d'
+    feed_url = current_app.config.get('SCHEDULE_FEED_URL')
 
     ical_raw = requests.get(feed_url, headers={'User-agent': 'Mozilla/5.0'}).text  # header fakes out their security
     calendar = Calendar.from_ical(ical_raw)
